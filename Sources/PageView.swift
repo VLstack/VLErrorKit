@@ -7,13 +7,14 @@ extension VLstack.DataError
  {
   @Environment(\.contextErrorPageSymbolForeground) private var symbolForeground
   @Environment(\.contextErrorPageSymbolBackground) private var symbolBackground
-  @Environment(\.contextErrorPageContentForeground) private var contentForeground
   @Environment(\.contextErrorPageContentBackground) private var contentBackground
   @Environment(\.contextErrorPageStrokeRadius) private var strokeRadius
   @Environment(\.contextErrorPageStroke) private var stroke
   @Environment(\.contextErrorPageBackground) private var pageBackground
   @Environment(\.contextErrorPageMessageFont) private var messageFont
+  @Environment(\.contextErrorPageMessageForeground) private var messageForeground
   @Environment(\.contextErrorPageDescriptionFont) private var descriptionFont
+  @Environment(\.contextErrorPageDescriptionForeground) private var descriptionForeground
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
@@ -63,6 +64,7 @@ extension VLstack.DataError
     Text(context.message)
      .multilineTextAlignment(.center)
      .font(messageFont)
+     .foregroundStyle(messageForeground)
      .textCase(nil)
      .underline()
      .frame(maxWidth: .infinity, alignment: .center)
@@ -80,15 +82,15 @@ extension VLstack.DataError
       }
      }
      .font(descriptionFont)
+     .foregroundStyle(descriptionForeground)
      .frame(minHeight: 200, alignment: .topLeading)
      .padding(.horizontal)
      .padding(.bottom)
      .scrollIndicators(.hidden)
     }
    }
-   .padding(10)
-   .foregroundStyle(contentForeground)
    .background(contentBackground)
+   .padding(10)
    .clipShape(.rect(cornerRadius: strokeRadius))
    .overlay
    {
