@@ -14,6 +14,11 @@ extension VLstack.DataError
   static let defaultValue: VLstack.DataError.BoxStyle = .init()
  }
 
+ internal struct DescriptionStyleKey: EnvironmentKey
+ {
+  static let defaultValue: VLstack.DataError.DescriptionStyle = .init()
+ }
+
  internal struct PageStyleKey: EnvironmentKey
  {
   static let defaultValue: VLstack.DataError.PageStyle = .init()
@@ -39,6 +44,12 @@ extension EnvironmentValues
   set { self[VLstack.DataError.BoxStyleKey.self] = newValue }
  }
 
+ internal var contextErrorDescriptionStyle: VLstack.DataError.DescriptionStyle
+ {
+  get { self[VLstack.DataError.DescriptionStyleKey.self] }
+  set { self[VLstack.DataError.DescriptionStyleKey.self] = newValue }
+ }
+
  internal var contextErrorPageStyle: VLstack.DataError.PageStyle
  {
   get { self[VLstack.DataError.PageStyleKey.self] }
@@ -62,6 +73,11 @@ extension View
  public func error(boxStyle style: VLstack.DataError.BoxStyle) -> some View
  {
   self.environment(\.contextErrorBoxStyle, style)
+ }
+
+ public func error(descriptionStyle style: VLstack.DataError.DescriptionStyle) -> some View
+ {
+  self.environment(\.contextErrorDescriptionStyle, style)
  }
 
  public func error(pageStyle style: VLstack.DataError.PageStyle) -> some View

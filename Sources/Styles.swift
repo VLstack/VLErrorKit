@@ -20,19 +20,26 @@ extension VLstack.DataError
   }
  }
 
- public struct PageStyle: Sendable
+ public struct DescriptionStyle: Sendable
  {
-  let background: Color
   let descriptionFont: Font
   let descriptionForeground: Color
 
-  init(background: Color = Color(uiColor: .secondarySystemBackground),
-       descriptionFont: Font = .body,
+  init(descriptionFont: Font = .body,
        descriptionForeground: Color = Color(uiColor: .label))
   {
-   self.background = background
    self.descriptionFont = descriptionFont
    self.descriptionForeground = descriptionForeground
+  }
+ }
+
+ public struct PageStyle: Sendable
+ {
+  let background: Color
+
+  init(background: Color = Color(uiColor: .secondarySystemBackground))
+  {
+   self.background = background
   }
  }
 
