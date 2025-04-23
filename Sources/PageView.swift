@@ -3,7 +3,7 @@ import SwiftUI
 
 extension VLstack.DataError
 {
- struct PageView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ public struct PageView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
   @Environment(\.contextErrorPageSymbolForeground) private var symbolForeground
   @Environment(\.contextErrorPageSymbolBackground) private var symbolBackground
@@ -20,8 +20,8 @@ extension VLstack.DataError
   private var description: [ VLstack.DataError.Description ] = []
   private let descriptionAlignment: Alignment
 
-  init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
-       alignment: TextAlignment = .center)
+  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+              alignment: TextAlignment = .center)
   {
    self.context = context
    self.alignment = alignment
@@ -40,16 +40,16 @@ extension VLstack.DataError
    }
   }
 
-  init(_ type: CONTEXTTYPE,
-       _ message: String,
-       error: Error,
-       alignment: TextAlignment = .center)
+  public init(_ type: CONTEXTTYPE,
+              _ message: String,
+              error: Error,
+              alignment: TextAlignment = .center)
   {
    self.init(VLstack.DataError.Context(type, message, error: error),
              alignment: alignment)
   }
 
-  var body: some View
+  public var body: some View
   {
    VStack
    {
