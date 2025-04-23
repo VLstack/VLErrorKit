@@ -89,8 +89,8 @@ extension VLstack.DataError
      .scrollIndicators(.hidden)
     }
    }
-   .background(contentBackground)
    .padding(10)
+   .background(contentBackground)
    .clipShape(.rect(cornerRadius: strokeRadius))
    .overlay
    {
