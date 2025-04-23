@@ -10,6 +10,7 @@ extension VLstack.DataError
   public let sfSymbol: VLstack.SFSymbol
   public let title: String
   public let description: String?
+  public let error: (any Error)?
 
   public init(_ type: CONTEXTTYPE,
               _ title: String,
@@ -21,6 +22,7 @@ extension VLstack.DataError
    self.title = title
    self.sfSymbol = sfSymbol
    self.description = description ?? error?.localizedDescription
+   self.error = error
   }
 
   public func isEqual(_ target: CONTEXTTYPE?,
