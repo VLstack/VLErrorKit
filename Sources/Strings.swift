@@ -4,11 +4,11 @@ extension VLstack.DataError
 {
  public struct Strings: Sendable
  {
-  let defaultAlertTitle: String
-  let defaultAlertMessage: String
+  package let defaultAlertTitle: String
+  package let defaultAlertMessage: String
 
-  init(defaultAlertTitle: String,
-       defaultAlertMessage: String)
+  public init(defaultAlertTitle: String,
+              defaultAlertMessage: String)
   {
    self.defaultAlertTitle = defaultAlertTitle
    self.defaultAlertMessage = defaultAlertMessage
