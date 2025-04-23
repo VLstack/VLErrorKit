@@ -1,20 +1,20 @@
 import VLstackNamespace
+import VLSFSymbolKit
 import SwiftUI
 
 extension VLstack.DataError
 {
- public struct PageView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
-  @Environment(\.contextErrorPageSymbolForeground) private var symbolForeground
-  @Environment(\.contextErrorPageSymbolBackground) private var symbolBackground
-  @Environment(\.contextErrorPageContentBackground) private var contentBackground
-  @Environment(\.contextErrorPageStrokeRadius) private var strokeRadius
-  @Environment(\.contextErrorPageStroke) private var stroke
-  @Environment(\.contextErrorPageBackground) private var pageBackground
-  @Environment(\.contextErrorPageMessageFont) private var messageFont
-  @Environment(\.contextErrorPageMessageForeground) private var messageForeground
-  @Environment(\.contextErrorPageDescriptionFont) private var descriptionFont
-  @Environment(\.contextErrorPageDescriptionForeground) private var descriptionForeground
+  @Environment(\.contextErrorBoxSymbolForeground) private var symbolForeground
+  @Environment(\.contextErrorBoxSymbolBackground) private var symbolBackground
+  @Environment(\.contextErrorBoxContentBackground) private var contentBackground
+  @Environment(\.contextErrorBoxStrokeRadius) private var strokeRadius
+  @Environment(\.contextErrorBoxStroke) private var stroke
+  @Environment(\.contextErrorBoxMessageFont) private var messageFont
+  @Environment(\.contextErrorBoxMessageForeground) private var messageForeground
+  @Environment(\.contextErrorBoxDescriptionFont) private var descriptionFont
+  @Environment(\.contextErrorBoxDescriptionForeground) private var descriptionForeground
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
@@ -98,9 +98,6 @@ extension VLstack.DataError
    }
    .contentShape(.rect(cornerRadius: strokeRadius))
    .padding()
-   .frame(maxHeight: .infinity, alignment: .center)
-   .background(pageBackground)
-   .ignoresSafeArea(.all)
   }
  }
 }
