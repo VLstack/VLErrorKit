@@ -8,22 +8,22 @@ extension VLstack.DataError
   @Environment(\.contextErrorInlineStyle) private var style
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>?
-  private let type: CONTEXTTYPE?
+  private let target: CONTEXTTYPE?
   private let strict: Bool
 
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>?,
-              type: CONTEXTTYPE? = nil,
+              target: CONTEXTTYPE? = nil,
               strict: Bool = false)
   {
    self.context = context
-   self.type = type
+   self.target = target
    self.strict = strict
   }
 
   public var body: some View
   {
    if let context,
-      context.isEqual(type, strict: strict)
+      context.isEqual(target, strict: strict)
    {
     HStack(alignment: .firstTextBaseline)
     {
