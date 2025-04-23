@@ -37,6 +37,15 @@ extension VLstack.DataError
    }
   }
 
+  public init(_ type: CONTEXTTYPE,
+              _ title: String,
+              error: any Error,
+              alignment: TextAlignment = .center)
+  {
+   self.init(VLstack.DataError.Context<CONTEXTTYPE>(type, title, error: error),
+             alignment: alignment)
+  }
+
   public var body: some View
   {
    VLstack.DataError.BoxView(context,
