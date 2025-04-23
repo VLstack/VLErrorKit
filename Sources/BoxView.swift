@@ -4,50 +4,32 @@ import SwiftUI
 
 extension VLstack.DataError
 {
- public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType, CONTENT: View>: View
  {
-  @Environment(\.contextErrorBoxSymbolForeground) private var symbolForeground
-  @Environment(\.contextErrorBoxSymbolBackground) private var symbolBackground
-  @Environment(\.contextErrorBoxContentBackground) private var contentBackground
-  @Environment(\.contextErrorBoxStrokeRadius) private var strokeRadius
-  @Environment(\.contextErrorBoxStroke) private var stroke
-  @Environment(\.contextErrorBoxMessageFont) private var messageFont
-  @Environment(\.contextErrorBoxMessageForeground) private var messageForeground
-  @Environment(\.contextErrorBoxDescriptionFont) private var descriptionFont
-  @Environment(\.contextErrorBoxDescriptionForeground) private var descriptionForeground
+  @Environment(\.contextErrorBoxStyle) private var style
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
-  private var description: [ VLstack.DataError.Description ] = []
-  private let descriptionAlignment: Alignment
+  private let content: () -> CONTENT
 
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
-              alignment: TextAlignment = .center)
+              alignment: TextAlignment = .center,
+              @ViewBuilder content: @escaping () -> CONTENT)
   {
    self.context = context
    self.alignment = alignment
-
-   if let description = context.description
-   {
-    self.description = description.split(separator: "\n", omittingEmptySubsequences: false)
-                                  .map { VLstack.DataError.Description(value: String($0)) }
-   }
-
-   switch alignment
-   {
-    case .leading: self.descriptionAlignment = .leading
-    case .center: self.descriptionAlignment = .center
-    case .trailing: self.descriptionAlignment = .trailing
-   }
+   self.content = content
   }
 
   public init(_ type: CONTEXTTYPE,
               _ message: String,
               error: Error,
-              alignment: TextAlignment = .center)
+              alignment: TextAlignment = .center,
+              @ViewBuilder content: @escaping () -> CONTENT)
   {
    self.init(VLstack.DataError.Context(type, message, error: error),
-             alignment: alignment)
+             alignment: alignment,
+             content: content)
   }
 
   public var body: some View
@@ -56,47 +38,30 @@ extension VLstack.DataError
    {
     Image(context.sfSymbol)
      .font(.system(size: 64, weight: .bold))
-     .foregroundStyle(symbolForeground)
+     .foregroundStyle(style.symbolForeground)
      .padding(.vertical, 24)
      .frame(maxWidth: .infinity, alignment: .center)
-     .background(symbolBackground)
+     .background(style.symbolBackground)
 
-    Text(context.message)
+    Text(context.title)
      .multilineTextAlignment(.center)
-     .font(messageFont)
-     .foregroundStyle(messageForeground)
+     .font(style.titleFont)
+     .foregroundStyle(style.titleForeground)
      .textCase(nil)
      .underline()
      .frame(maxWidth: .infinity, alignment: .center)
      .padding()
 
-    if !description.isEmpty
-    {
-     VStack(spacing: 4)
-     {
-      ForEach(description, id: \.self)
-      {
-       Text($0.value)
-        .multilineTextAlignment(alignment)
-        .frame(maxWidth: .infinity, alignment: descriptionAlignment)
-      }
-     }
-     .font(descriptionFont)
-     .foregroundStyle(descriptionForeground)
-     .frame(minHeight: 200, alignment: .topLeading)
-     .padding(.horizontal)
-     .padding(.bottom)
-     .scrollIndicators(.hidden)
-    }
+    content()
    }
-   .background(contentBackground)
-   .clipShape(.rect(cornerRadius: strokeRadius))
+   .background(style.background)
+   .clipShape(.rect(cornerRadius: style.strokeRadius))
    .overlay
    {
-    RoundedRectangle(cornerRadius: strokeRadius)
-     .stroke(stroke, lineWidth: 1)
+    RoundedRectangle(cornerRadius: style.strokeRadius)
+     .stroke(style.strokeColor, lineWidth: 1)
    }
-   .contentShape(.rect(cornerRadius: strokeRadius))
+   .contentShape(.rect(cornerRadius: style.strokeRadius))
    .padding()
   }
  }

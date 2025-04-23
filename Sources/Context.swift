@@ -8,17 +8,17 @@ extension VLstack.DataError
  {
   private let type: CONTEXTTYPE
   public let sfSymbol: VLstack.SFSymbol
-  public let message: String
+  public let title: String
   public let description: String?
 
   public init(_ type: CONTEXTTYPE,
-              _ message: String,
+              _ title: String,
               sfSymbol: VLstack.SFSymbol = .infoCircle,
               description: String? = nil,
               error: (any Error)? = nil)
   {
    self.type = type
-   self.message = message
+   self.title = title
    self.sfSymbol = sfSymbol
    self.description = description ?? error?.localizedDescription
   }
@@ -34,7 +34,7 @@ extension VLstack.DataError
   {
       lhs.type == rhs.type
    && lhs.sfSymbol == rhs.sfSymbol
-   && lhs.message == rhs.message
+   && lhs.title == rhs.title
    && lhs.description == rhs.description
   }
 
@@ -42,7 +42,7 @@ extension VLstack.DataError
   {
    hasher.combine(type)
    hasher.combine(sfSymbol)
-   hasher.combine(message)
+   hasher.combine(title)
    hasher.combine(description)
   }
  }

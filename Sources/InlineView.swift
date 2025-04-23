@@ -5,10 +5,7 @@ extension VLstack.DataError
 {
  public struct InlineView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
-  @Environment(\.contextErrorInlineFont) private var font
-  @Environment(\.contextErrorInlineSymbolForeground) private var foreground
-  @Environment(\.contextErrorInlineDescriptionFont) private var descriptionFont
-
+  @Environment(\.contextErrorInlineStyle) private var style
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>?
   private let type: CONTEXTTYPE?
@@ -31,18 +28,18 @@ extension VLstack.DataError
     HStack(alignment: .firstTextBaseline)
     {
      Image(context.sfSymbol)
-      .font(font)
-      .foregroundStyle(foreground)
+      .font(style.font)
+      .foregroundStyle(style.symbolForeground)
 
      VStack(alignment: .leading)
      {
-      Text(context.message)
-       .font(font)
+      Text(context.title)
+       .font(style.font)
 
       if let description = context.description
       {
        Text(description)
-        .font(descriptionFont)
+        .font(style.descriptionFont)
       }
      }
     }
