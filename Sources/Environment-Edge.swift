@@ -25,6 +25,6 @@ extension EnvironmentValues
 
 extension View
 {
- public func contextError(edgeBackground color: Color) -> some View { self.environment(\.contextErrorEdgeBackground, color) }
- public func contextError(edgeDismissEnabled state: Bool) -> some View { self.environment(\.contextErrorEdgeDismissEnabled, state) }
+ public func contextError(pageBackground color: Color) -> some View { self.environment(\.contextErrorEdgeBackground, color) }
+ public func contextError(dismissEnabled state: Bool) -> some View { self.environment(\.contextErrorEdgeDismissEnabled, state) }
 }
