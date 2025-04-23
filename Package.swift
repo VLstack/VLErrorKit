@@ -3,19 +3,21 @@
 
 import PackageDescription
 
-let package = Package(
-    name: "VLErrorKit",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "VLErrorKit",
-            targets: ["VLErrorKit"]),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "VLErrorKit"),
-
-    ]
-)
+let package = Package(name: "VLErrorKit",
+                      platforms: [ .iOS(.v17) ],
+                      products:
+                      [
+                       .library(name: "VLErrorKit",
+                                targets: [ "VLErrorKit" ])
+                      ],
+                      dependencies:
+                      [
+                       .package(url: "https://github.com/VLstack/VLstackNamespace", from: "1.1.1"),
+                       .package(url: "https://github.com/VLstack/VLSFSymbolKit", from: "1.1.4"),
+                       .package(url: "https://github.com/VLstack/VLColorKit", from: "1.3.0")
+                      ],
+                      targets:
+                      [
+                       .target(name: "VLErrorKit",
+                               dependencies: [ "VLstackNamespace", "VLSFSymbolKit", "VLColorKit" ])
+                      ])
