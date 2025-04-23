@@ -10,31 +10,17 @@ extension VLstack.DataError
   public let sfSymbol: VLstack.SFSymbol
   public let message: String
   public let description: String?
-  public var originalError: (any Error)?
 
   public init(_ type: CONTEXTTYPE,
               _ message: String,
               sfSymbol: VLstack.SFSymbol = .infoCircle,
               description: String? = nil,
-              originalError: (any Error)? = nil)
+              error: (any Error)? = nil)
   {
    self.type = type
    self.message = message
    self.sfSymbol = sfSymbol
-   self.description = description
-   self.originalError = originalError
-  }
-
-  public init(_ type: CONTEXTTYPE,
-              _ message: String,
-              sfSymbol: VLstack.SFSymbol = .infoCircle,
-              error: any Error)
-  {
-   self.init(type,
-             message,
-             sfSymbol: sfSymbol,
-             description: error.localizedDescription,
-             originalError: error)
+   self.description = description ?? error?.localizedDescription
   }
 
   public func isEqual(_ target: CONTEXTTYPE?,
@@ -50,7 +36,6 @@ extension VLstack.DataError
    && lhs.sfSymbol == rhs.sfSymbol
    && lhs.message == rhs.message
    && lhs.description == rhs.description
-   && lhs.originalError?.localizedDescription == rhs.originalError?.localizedDescription
   }
 
   public func hash(into hasher: inout Hasher)
@@ -59,7 +44,6 @@ extension VLstack.DataError
    hasher.combine(sfSymbol)
    hasher.combine(message)
    hasher.combine(description)
-   hasher.combine(originalError?.localizedDescription)
   }
  }
 }
