@@ -21,17 +21,6 @@ extension VLstack.DataError
    self.content = content
   }
 
-  public init(_ type: CONTEXTTYPE,
-              _ message: String,
-              error: Error,
-              alignment: TextAlignment = .center,
-              @ViewBuilder content: @escaping () -> CONTENT)
-  {
-   self.init(VLstack.DataError.Context(type, message, error: error),
-             alignment: alignment,
-             content: content)
-  }
-
   public var body: some View
   {
    VStack
