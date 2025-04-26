@@ -8,19 +8,30 @@ extension VLstack.DataError
  {
   private let type: CONTEXTTYPE
   public let sfSymbol: VLstack.SFSymbol
+  public let symbolVariant: SymbolVariants
   public let title: String
   public let description: String?
   public let error: (any Error)?
 
   public init(_ type: CONTEXTTYPE,
               _ title: String,
-              sfSymbol: VLstack.SFSymbol = .info,
+              sfSymbol: VLstack.SFSymbol? = nil,
+              symbolVariant: SymbolVariants? = nil,
               description: String? = nil,
               error: (any Error)? = nil)
   {
    self.type = type
    self.title = title
-   self.sfSymbol = sfSymbol
+   if let sfSymbol
+   {
+    self.sfSymbol = sfSymbol
+    self.symbolVariant = symbolVariant ?? .none
+   }
+   else
+   {
+    self.sfSymbol = .info
+    self.symbolVariant = .circle
+   }
    self.description = description ?? error?.localizedDescription
    self.error = error
   }

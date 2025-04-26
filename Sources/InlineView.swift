@@ -28,6 +28,7 @@ extension VLstack.DataError
     HStack(alignment: .firstTextBaseline)
     {
      Image(context.sfSymbol)
+      .symbolVariant(context.symbolVariant)
       .font(style.font)
       .foregroundStyle(style.symbolForeground)
 

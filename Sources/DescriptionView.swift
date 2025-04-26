@@ -1,5 +1,4 @@
 import VLstackNamespace
-import VLSFSymbolKit
 import SwiftUI
 
 extension VLstack.DataError

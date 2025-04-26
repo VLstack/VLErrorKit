@@ -37,6 +37,7 @@ extension VLstack.DataError
    VStack
    {
     Image(context.sfSymbol)
+     .symbolVariant(context.symbolVariant)
      .font(.system(size: 64, weight: .bold))
      .foregroundStyle(style.symbolForeground)
      .padding(.vertical, 24)
