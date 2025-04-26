@@ -14,7 +14,7 @@ extension VLstack.DataError
 
   public init(_ type: CONTEXTTYPE,
               _ title: String,
-              sfSymbol: VLstack.SFSymbol = .infoCircle,
+              sfSymbol: VLstack.SFSymbol = .info,
               description: String? = nil,
               error: (any Error)? = nil)
   {
