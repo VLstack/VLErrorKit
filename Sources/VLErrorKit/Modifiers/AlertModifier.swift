@@ -1,11 +1,11 @@
 import VLstackNamespace
+import VLBundleKit
 import SwiftUI
 
 extension VLstack.DataError
 {
  package struct AlertModifier<CONTEXTTYPE: VLstack.DataError.ContextType>: ViewModifier
  {
-  @Environment(\.contextErrorStrings) private var strings
   private let title: String?
   private let target: CONTEXTTYPE?
   @Binding private var contextError: VLstack.DataError.Context<CONTEXTTYPE>?
@@ -22,11 +22,16 @@ extension VLstack.DataError
   public func body(content: Content) -> some View
   {
    content
-    .alert(title ?? strings.defaultAlertTitle,
+    .alert(title ?? Bundle.main.localizedString("I18N-VLErrorKit.Error",
+                                                fallbackModule: .module),
           isPresented: Binding<Bool>(get: { contextError != nil && contextError?.isEqual(target) == true },
                                      set: { _ in contextError = nil }),
           actions: {},
-          message: { Text(contextError?.title ?? strings.defaultAlertMessage) })
+          message:
+          {
+           Text(verbatim: contextError?.title ?? Bundle.main.localizedString("I18N-VLErrorKit.UnexpectedIssue",
+                                                                             fallbackModule: .module))
+          })
   }
  }
 }
