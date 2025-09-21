@@ -4,6 +4,11 @@ import SwiftUI
 
 extension VLstack.DataError
 {
+ /// A SwiftUI view representing a styled error box with an optional content view.
+ /// - Parameters:
+ ///   - context: The error context to display (symbol, title, description).
+ ///   - alignment: Text alignment for the content. Default is `.center`.
+ ///   - content: Optional additional content displayed below the error title.
  public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType, CONTENT: View>: View
  {
   @Environment(\.contextErrorBoxStyle) private var style
@@ -12,6 +17,7 @@ extension VLstack.DataError
   private let alignment: TextAlignment
   private let content: () -> CONTENT
 
+  /// Creates a BoxView with a given error context and optional content.
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
               alignment: TextAlignment = .center,
               @ViewBuilder content: @escaping () -> CONTENT)
@@ -21,6 +27,7 @@ extension VLstack.DataError
    self.content = content
   }
 
+  /// Creates a BoxView from a type, title, and underlying error with optional content.
   public init(_ type: CONTEXTTYPE,
               _ title: String,
               error: any Error,

@@ -3,6 +3,8 @@ import VLstackNamespace
 
 extension VLstack.DataError
 {
+ /// A compact SwiftUI view displaying an inline representation of an error context.
+ /// Shows an SF Symbol, title, and optional description in a horizontal layout.
  public struct InlineView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
   @Environment(\.contextErrorInlineStyle) private var style
@@ -11,6 +13,11 @@ extension VLstack.DataError
   private let target: CONTEXTTYPE?
   private let strict: Bool
 
+  /// Creates an InlineView for a given optional error context.
+  /// - Parameters:
+  ///   - context: The optional error context to display.
+  ///   - target: Optional target context type to match before showing.
+  ///   - strict: Whether to enforce strict equality when comparing context to target.
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>?,
               target: CONTEXTTYPE? = nil,
               strict: Bool = false)

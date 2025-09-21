@@ -3,6 +3,10 @@ import SwiftUI
 
 extension VLstack.DataError
 {
+ /// A SwiftUI view displaying the description lines of an error context within a BoxView.
+ /// - Parameters:
+ ///   - context: The error context containing the description.
+ ///   - alignment: Text alignment for the description. Default is `.center`.
  public struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
   @Environment(\.contextErrorDescriptionStyle) private var style
@@ -12,6 +16,7 @@ extension VLstack.DataError
   private let description: [ VLstack.DataError.Description ]
   private let descriptionAlignment: Alignment
 
+  /// Creates a DescriptionView with a given error context.
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
               alignment: TextAlignment = .center)
   {
@@ -36,6 +41,7 @@ extension VLstack.DataError
    }
   }
 
+  /// Creates a DescriptionView from a type, title, and underlying error.
   public init(_ type: CONTEXTTYPE,
               _ title: String,
               error: any Error,
