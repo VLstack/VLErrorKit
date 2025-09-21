@@ -4,6 +4,11 @@ import SwiftUI
 
 extension VLstack.DataError
 {
+ /// SwiftUI ViewModifier that displays an alert for a given context error.
+ /// - Parameters:
+ ///   - title: Optional custom title for the alert. Defaults to a localized "Error".
+ ///   - target: Optional target context to match before showing the alert.
+ ///   - contextError: Binding to the context error to display.
  package struct AlertModifier<CONTEXTTYPE: VLstack.DataError.ContextType>: ViewModifier
  {
   private let title: String?
@@ -38,6 +43,11 @@ extension VLstack.DataError
 
 extension View
 {
+ /// Displays an alert for a given context error in this view hierarchy.
+ /// - Parameters:
+ ///   - title: Optional custom title for the alert.
+ ///   - target: Optional target context to match before showing the alert.
+ ///   - contextError: Binding to the context error to display.
  public func alert<CONTEXTTYPE: VLstack.DataError.ContextType>(title: String? = nil,
                    target: CONTEXTTYPE? = nil,
                    error contextError: Binding<VLstack.DataError.Context<CONTEXTTYPE>?>) -> some View
