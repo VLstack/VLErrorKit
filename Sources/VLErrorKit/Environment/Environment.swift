@@ -65,28 +65,33 @@ extension EnvironmentValues
 
 extension View
 {
- public func error(inlineStyle style: VLstack.DataError.InlineStyle) -> some View
- {
-  self.environment(\.contextErrorInlineStyle, style)
- }
-
+ /// Apply a custom box style to the error view in this view hierarchy.
  public func error(boxStyle style: VLstack.DataError.BoxStyle) -> some View
  {
   self.environment(\.contextErrorBoxStyle, style)
  }
 
+ /// Apply a custom description style to the error view in this view hierarchy.
  public func error(descriptionStyle style: VLstack.DataError.DescriptionStyle) -> some View
  {
   self.environment(\.contextErrorDescriptionStyle, style)
  }
 
- public func error(pageStyle style: VLstack.DataError.PageStyle) -> some View
- {
-  self.environment(\.contextErrorPageStyle, style)
- }
-
+ /// Enable or disable the dismiss button on the error view.
  public func error(dismissEnabled state: Bool) -> some View
  {
   self.environment(\.contextErrorDismissEnabled, state)
+ }
+
+ /// Apply a custom inline style to the error view in this view hierarchy.
+ public func error(inlineStyle style: VLstack.DataError.InlineStyle) -> some View
+ {
+  self.environment(\.contextErrorInlineStyle, style)
+ }
+
+ /// Apply a custom page style to the error view in this view hierarchy.
+ public func error(pageStyle style: VLstack.DataError.PageStyle) -> some View
+ {
+  self.environment(\.contextErrorPageStyle, style)
  }
 }
