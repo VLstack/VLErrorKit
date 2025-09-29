@@ -25,8 +25,8 @@ extension VLstack.DataError
 
   @inlinable
   init(background: Color = Color(uiColor: .systemBackground),
-       titleFont: Font = .title2,
-       titleForeground: Color = Color(hex: "DC625E"),
+       titleFont: Font = .title,
+       titleForeground: Color = Color(hex: "FFFFFF"),
        symbolForeground: Color = Color(hex: "FFFFFF"),
        symbolBackground: Color = Color(hex: "DC625E"),
        strokeRadius: CGFloat = 10,

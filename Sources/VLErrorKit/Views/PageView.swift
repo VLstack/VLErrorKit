@@ -7,9 +7,9 @@ extension VLstack.DataError
  /// Composes DescriptionView and overlays a dismiss button if enabled.
  public struct PageView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
-  @Environment(\.dismiss) private var dismiss
+//  @Environment(\.dismiss) private var dismiss
   @Environment(\.contextErrorPageStyle) private var style
-  @Environment(\.contextErrorDismissEnabled) private var dismissEnabled
+//  @Environment(\.contextErrorDismissEnabled) private var dismissEnabled
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
@@ -19,7 +19,7 @@ extension VLstack.DataError
   ///   - context: The error context to display.
   ///   - alignment: Text alignment for the description. Default is `.center`.
   public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
-              alignment: TextAlignment = .center)
+              alignment: TextAlignment = .leading)
   {
    self.context = context
    self.alignment = alignment
@@ -45,24 +45,34 @@ extension VLstack.DataError
    VLstack.DataError.DescriptionView(context,
                                      alignment: alignment)
    .background(style.background)
-   .ignoresSafeArea(.all)
-   .overlay(alignment: .topTrailing)
-   {
-    if dismissEnabled
-    {
-     Button(action: { dismiss() })
-     {
-      Image(.xmark)
-       .font(.system(size: 16, weight: .bold))
-       .foregroundColor(.white)
-       .padding(5)
-       .background(Color.black.opacity(0.6))
-       .clipShape(.circle)
-     }
-     .buttonStyle(.plain)
-     .padding()
-    }
-   }
   }
  }
 }
+
+#if DEBUG
+typealias PreviewPageContextError = VLstack.DataError.Context<PreviewPageContextErrorType>
+
+enum PreviewPageContextErrorType: VLstack.DataError.ContextType
+{
+ case fatal
+ case importLog
+ case exportLog
+ case exportEntry
+}
+
+struct PageView_Previews: PreviewProvider
+{
+ static let dummyError = PreviewPageContextError(.fatal,
+                                                 "Fatal error",
+                                                 description: "We are experiencing a technical problem that prevents the application from starting due to an issue with our data management system.\nPlease try the following actions:\n\n1. Check if an update for the application is available.\n2. Make sure you have enough storage space on your device.",
+                                                 error: URLError(.badURL))
+
+ static var previews: some View
+ {
+  VLstack.DataError.PageView(dummyError)
+  .environment(\.contextErrorDismissEnabled, true)
+//  .previewInterfaceOrientation(.landscapeLeft)
+//  .preferredColorScheme(.dark)
+ }
+}
+#endif

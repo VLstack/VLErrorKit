@@ -7,30 +7,29 @@ extension VLstack.DataError
  /// - Parameters:
  ///   - context: The error context containing the description.
  ///   - alignment: Text alignment for the description. Default is `.center`.
- public struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ internal struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
   @Environment(\.contextErrorDescriptionStyle) private var style
 
   private let context: VLstack.DataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
-  private let description: [ VLstack.DataError.Description ]
+  private var description: [ String ]
   private let descriptionAlignment: Alignment
 
   /// Creates a DescriptionView with a given error context.
-  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
-              alignment: TextAlignment = .center)
+  internal init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+                alignment: TextAlignment = .center)
   {
    self.context = context
    self.alignment = alignment
 
-   if let description = context.description
+   self.description = context.description?.split(separator: "\n", omittingEmptySubsequences: false)
+                                          .map { String($0) } ?? []
+
+   if let errorDescription = context.error?.localizedDescription,
+      self.description.last != errorDescription
    {
-    self.description = description.split(separator: "\n", omittingEmptySubsequences: false)
-                                  .map { VLstack.DataError.Description(value: String($0)) }
-   }
-   else
-   {
-    self.description = []
+    self.description.append(contentsOf: [ "", "", errorDescription ])
    }
 
    switch alignment
@@ -42,16 +41,16 @@ extension VLstack.DataError
   }
 
   /// Creates a DescriptionView from a type, title, and underlying error.
-  public init(_ type: CONTEXTTYPE,
-              _ title: String,
-              error: any Error,
-              alignment: TextAlignment = .center)
+  internal init(_ type: CONTEXTTYPE,
+                _ title: String,
+                error: any Error,
+                alignment: TextAlignment = .center)
   {
    self.init(VLstack.DataError.Context<CONTEXTTYPE>(type, title, error: error),
              alignment: alignment)
   }
 
-  public var body: some View
+  internal var body: some View
   {
    VLstack.DataError.BoxView(context,
                              alignment: alignment)
@@ -60,9 +59,10 @@ extension VLstack.DataError
     {
      VStack(spacing: 4)
      {
-      ForEach(description, id: \.self)
+      ForEach(Array(description.enumerated()), id: \.0)
       {
-       Text($0.value)
+       _, text in
+       Text(text)
         .multilineTextAlignment(alignment)
         .frame(maxWidth: .infinity, alignment: descriptionAlignment)
       }
@@ -71,8 +71,6 @@ extension VLstack.DataError
      .foregroundStyle(style.descriptionForeground)
      .frame(minHeight: 200, alignment: .topLeading)
      .padding(.horizontal)
-     .padding(.bottom)
-     .scrollIndicators(.hidden)
     }
    }
    .frame(maxHeight: .infinity, alignment: .center)
