@@ -9,7 +9,7 @@ extension VLstack.DataError
  ///   - context: The error context to display (symbol, title, description).
  ///   - alignment: Text alignment for the content. Default is `.center`.
  ///   - content: Optional additional content displayed below the error title.
- internal struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType, CONTENT: View>: View
+ public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType, CONTENT: View>: View
  {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -21,7 +21,7 @@ extension VLstack.DataError
   private let content: () -> CONTENT
 
   /// Creates a BoxView with a given error context and optional content.
-  internal init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
               alignment: TextAlignment = .center,
               @ViewBuilder content: @escaping () -> CONTENT)
   {
@@ -31,7 +31,7 @@ extension VLstack.DataError
   }
 
   /// Creates a BoxView from a type, title, and underlying error with optional content.
-  internal init(_ type: CONTEXTTYPE,
+  public init(_ type: CONTEXTTYPE,
               _ title: String,
               error: any Error,
               alignment: TextAlignment = .center,
@@ -42,7 +42,7 @@ extension VLstack.DataError
              content: content)
   }
 
-  internal var body: some View
+  public var body: some View
   {
    VStack
    {

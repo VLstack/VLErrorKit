@@ -7,7 +7,7 @@ extension VLstack.DataError
  /// - Parameters:
  ///   - context: The error context containing the description.
  ///   - alignment: Text alignment for the description. Default is `.center`.
- internal struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ public struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
  {
   @Environment(\.contextErrorDescriptionStyle) private var style
 
@@ -17,8 +17,8 @@ extension VLstack.DataError
   private let descriptionAlignment: Alignment
 
   /// Creates a DescriptionView with a given error context.
-  internal init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
-                alignment: TextAlignment = .center)
+  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+              alignment: TextAlignment = .center)
   {
    self.context = context
    self.alignment = alignment
@@ -41,16 +41,16 @@ extension VLstack.DataError
   }
 
   /// Creates a DescriptionView from a type, title, and underlying error.
-  internal init(_ type: CONTEXTTYPE,
-                _ title: String,
-                error: any Error,
-                alignment: TextAlignment = .center)
+  public init(_ type: CONTEXTTYPE,
+              _ title: String,
+              error: any Error,
+              alignment: TextAlignment = .center)
   {
    self.init(VLstack.DataError.Context<CONTEXTTYPE>(type, title, error: error),
              alignment: alignment)
   }
 
-  internal var body: some View
+  public var body: some View
   {
    VLstack.DataError.BoxView(context,
                              alignment: alignment)
