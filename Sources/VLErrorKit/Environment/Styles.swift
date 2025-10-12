@@ -15,22 +15,22 @@ extension VLstack.DataError
  ///   - strokeColor: Color of the box border. Default is red `DC625E`.
  public struct BoxStyle: Sendable
  {
-  @usableFromInline let background: Color
-  @usableFromInline let titleFont: Font
-  @usableFromInline let titleForeground: Color
-  @usableFromInline let symbolForeground: Color
-  @usableFromInline let symbolBackground: Color
-  @usableFromInline let strokeRadius: CGFloat
-  @usableFromInline let strokeColor: Color
+  @usableFromInline internal let background: Color
+  @usableFromInline internal let titleFont: Font
+  @usableFromInline internal let titleForeground: Color
+  @usableFromInline internal let symbolForeground: Color
+  @usableFromInline internal let symbolBackground: Color
+  @usableFromInline internal let strokeRadius: CGFloat
+  @usableFromInline internal let strokeColor: Color
 
   @inlinable
-  init(background: Color = Color(uiColor: .systemBackground),
-       titleFont: Font = .title,
-       titleForeground: Color = Color(hex: "FFFFFF"),
-       symbolForeground: Color = Color(hex: "FFFFFF"),
-       symbolBackground: Color = Color(hex: "DC625E"),
-       strokeRadius: CGFloat = 10,
-       strokeColor: Color = Color(hex: "DC625E"))
+  public init(background: Color = Color(uiColor: .systemBackground),
+              titleFont: Font = .title,
+              titleForeground: Color = Color(hex: "FFFFFF"),
+              symbolForeground: Color = Color(hex: "FFFFFF"),
+              symbolBackground: Color = Color(hex: "DC625E"),
+              strokeRadius: CGFloat = 10,
+              strokeColor: Color = Color(hex: "DC625E"))
   {
    self.background = background
    self.titleFont = titleFont
@@ -48,12 +48,12 @@ extension VLstack.DataError
  ///   - descriptionForeground: Foreground color for the description text. Default is `.label`.
  public struct DescriptionStyle: Sendable
  {
-  @usableFromInline let descriptionFont: Font
-  @usableFromInline let descriptionForeground: Color
+  @usableFromInline internal let descriptionFont: Font
+  @usableFromInline internal let descriptionForeground: Color
 
   @inlinable
-  init(descriptionFont: Font = .body,
-       descriptionForeground: Color = Color(uiColor: .label))
+  public init(descriptionFont: Font = .body,
+              descriptionForeground: Color = Color(uiColor: .label))
   {
    self.descriptionFont = descriptionFont
    self.descriptionForeground = descriptionForeground
@@ -67,14 +67,14 @@ extension VLstack.DataError
  ///   - descriptionFont: Font used for the description text. Default is `.callout`.
  public struct InlineStyle: Sendable
  {
-  @usableFromInline let font: Font
-  @usableFromInline let symbolForeground: Color
-  @usableFromInline let descriptionFont: Font
+  @usableFromInline internal let font: Font
+  @usableFromInline internal let symbolForeground: Color
+  @usableFromInline internal let descriptionFont: Font
 
   @inlinable
-  init(font: Font = .body,
-       symbolForeground: Color = Color(hex: "DC625E"),
-       descriptionFont: Font = .callout)
+  public init(font: Font = .body,
+              symbolForeground: Color = Color(hex: "DC625E"),
+              descriptionFont: Font = .callout)
   {
    self.font = font
    self.symbolForeground = symbolForeground
@@ -87,10 +87,10 @@ extension VLstack.DataError
  ///   - background: Background color of the page. Default is `secondarySystemBackground`.
  public struct PageStyle: Sendable
  {
-  @usableFromInline let background: Color
+  @usableFromInline internal let background: Color
 
   @inlinable
-  init(background: Color = Color(uiColor: .secondarySystemBackground))
+  public init(background: Color = Color(uiColor: .secondarySystemBackground))
   {
    self.background = background
   }
