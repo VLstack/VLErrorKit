@@ -1,23 +1,22 @@
-import VLstackNamespace
 import SwiftUI
 
-extension VLstack.DataError
+extension VLDataError
 {
  /// A SwiftUI view displaying the description lines of an error context within a BoxView.
  /// - Parameters:
  ///   - context: The error context containing the description.
  ///   - alignment: Text alignment for the description. Default is `.center`.
- internal struct DescriptionView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ internal struct DescriptionView<CONTEXTTYPE: VLDataError.ContextType>: View
  {
   @Environment(\.contextErrorDescriptionStyle) private var style
 
-  private let context: VLstack.DataError.Context<CONTEXTTYPE>
+  private let context: VLDataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
   private var description: [ String ]
   private let descriptionAlignment: Alignment
 
   /// Creates a DescriptionView with a given error context.
-  internal init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+  internal init(_ context: VLDataError.Context<CONTEXTTYPE>,
                 alignment: TextAlignment = .center)
   {
    self.context = context
@@ -46,14 +45,14 @@ extension VLstack.DataError
                  error: any Error,
                  alignment: TextAlignment = .center)
   {
-   self.init(VLstack.DataError.Context<CONTEXTTYPE>(type, title, error: error),
+   self.init(VLDataError.Context<CONTEXTTYPE>(type, title, error: error),
              alignment: alignment)
   }
 
   internal var body: some View
   {
-   VLstack.DataError.BoxView(context,
-                             alignment: alignment)
+   VLDataError.BoxView(context,
+                       alignment: alignment)
    {
     if !description.isEmpty
     {

@@ -1,8 +1,7 @@
-import VLstackNamespace
 import VLColorKit
 import SwiftUI
 
-extension VLstack.DataError
+extension VLDataError
 {
  /// Represents the style of a boxed error view.
  /// - Parameters:

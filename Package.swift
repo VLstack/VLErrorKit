@@ -13,14 +13,13 @@ let package = Package(name: "VLErrorKit",
                       ],
                       dependencies:
                       [
-                       .package(url: "https://github.com/VLstack/VLstackNamespace", from: "1.2.0"),
                        .package(url: "https://github.com/VLstack/VLBundleKit", from: "1.5.1"),
-                       .package(url: "https://github.com/VLstack/VLSFSymbolKit", from: "2.10.1"),
+                       .package(url: "https://github.com/VLstack/VLSFSymbolKit", from: "3.0.0"),
                        .package(url: "https://github.com/VLstack/VLColorKit", from: "3.1.0")
                       ],
                       targets:
                       [
                        .target(name: "VLErrorKit",
-                               dependencies: [ "VLstackNamespace", "VLBundleKit", "VLSFSymbolKit", "VLColorKit" ],
+                               dependencies: [ "VLBundleKit", "VLSFSymbolKit", "VLColorKit" ],
                                resources: [ .process("Resources") ])
                       ])

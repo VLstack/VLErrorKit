@@ -1,15 +1,14 @@
 import SwiftUI
-import VLstackNamespace
 
-extension VLstack.DataError
+extension VLDataError
 {
  /// A compact SwiftUI view displaying an inline representation of an error context.
  /// Shows an SF Symbol, title, and optional description in a horizontal layout.
- public struct InlineView<CONTEXTTYPE: VLstack.DataError.ContextType>: View
+ public struct InlineView<CONTEXTTYPE: VLDataError.ContextType>: View
  {
   @Environment(\.contextErrorInlineStyle) private var style
 
-  private let context: VLstack.DataError.Context<CONTEXTTYPE>?
+  private let context: VLDataError.Context<CONTEXTTYPE>?
   private let target: CONTEXTTYPE?
   private let strict: Bool
 
@@ -18,7 +17,7 @@ extension VLstack.DataError
   ///   - context: The optional error context to display.
   ///   - target: Optional target context type to match before showing.
   ///   - strict: Whether to enforce strict equality when comparing context to target.
-  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>?,
+  public init(_ context: VLDataError.Context<CONTEXTTYPE>?,
               target: CONTEXTTYPE? = nil,
               strict: Bool = false)
   {
@@ -60,9 +59,9 @@ extension VLstack.DataError
 }
 
 #if DEBUG
-typealias PreviewInlineContextError = VLstack.DataError.Context<PreviewInlineContextErrorType>
+typealias PreviewInlineContextError = VLDataError.Context<PreviewInlineContextErrorType>
 
-enum PreviewInlineContextErrorType: VLstack.DataError.ContextType
+enum PreviewInlineContextErrorType: VLDataError.ContextType
 {
  case fatal
  case importLog
@@ -92,13 +91,13 @@ struct InlineView_Previews: PreviewProvider
   {
    Section
    {
-    VLstack.DataError.InlineView(dummyErrorA)
+    VLDataError.InlineView(dummyErrorA)
      .error(inlineStyle: .init(font: .largeTitle,
                                symbolForeground: .green,
                                descriptionFont: .footnote))
-    VLstack.DataError.InlineView(dummyErrorB)
-    VLstack.DataError.InlineView(dummyErrorC)
-    VLstack.DataError.InlineView(dummyErrorD)
+    VLDataError.InlineView(dummyErrorB)
+    VLDataError.InlineView(dummyErrorC)
+    VLDataError.InlineView(dummyErrorD)
    }
   }
 //  .previewInterfaceOrientation(.landscapeLeft)

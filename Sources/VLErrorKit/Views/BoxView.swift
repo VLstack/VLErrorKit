@@ -1,27 +1,26 @@
-import VLstackNamespace
 import VLSFSymbolKit
 import SwiftUI
 
-extension VLstack.DataError
+extension VLDataError
 {
  /// A SwiftUI view representing a styled error box with an optional content view.
  /// - Parameters:
  ///   - context: The error context to display (symbol, title, description).
  ///   - alignment: Text alignment for the content. Default is `.center`.
  ///   - content: Optional additional content displayed below the error title.
- public struct BoxView<CONTEXTTYPE: VLstack.DataError.ContextType, CONTENT: View>: View
+ public struct BoxView<CONTEXTTYPE: VLDataError.ContextType, CONTENT: View>: View
  {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @Environment(\.contextErrorDismissEnabled) private var dismissEnabled
   @Environment(\.contextErrorBoxStyle) private var style
 
-  private let context: VLstack.DataError.Context<CONTEXTTYPE>
+  private let context: VLDataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
   private let content: () -> CONTENT
 
   /// Creates a BoxView with a given error context and optional content.
-  public init(_ context: VLstack.DataError.Context<CONTEXTTYPE>,
+  public init(_ context: VLDataError.Context<CONTEXTTYPE>,
               alignment: TextAlignment = .center,
               @ViewBuilder content: @escaping () -> CONTENT)
   {
@@ -37,7 +36,7 @@ extension VLstack.DataError
               alignment: TextAlignment = .center,
               @ViewBuilder content: @escaping () -> CONTENT)
   {
-   self.init(VLstack.DataError.Context<CONTEXTTYPE>(type, title, error: error),
+   self.init(VLDataError.Context<CONTEXTTYPE>(type, title, error: error),
              alignment: alignment,
              content: content)
   }

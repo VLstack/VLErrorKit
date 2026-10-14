@@ -1,21 +1,20 @@
-import VLstackNamespace
 import VLColorKit
 import SwiftUI
 
-extension VLstack.DataError
+extension VLDataError
 {
  @usableFromInline
  internal struct BoxStyleKey: EnvironmentKey
  {
   @usableFromInline
-  static let defaultValue: VLstack.DataError.BoxStyle = .init()
+  static let defaultValue: VLDataError.BoxStyle = .init()
  }
 
  @usableFromInline
  internal struct DescriptionStyleKey: EnvironmentKey
  {
   @usableFromInline
-  static let defaultValue: VLstack.DataError.DescriptionStyle = .init()
+  static let defaultValue: VLDataError.DescriptionStyle = .init()
  }
 
  @usableFromInline
@@ -29,52 +28,52 @@ extension VLstack.DataError
  internal struct InlineStyleKey: EnvironmentKey
  {
   @usableFromInline
-  static let defaultValue: VLstack.DataError.InlineStyle = .init()
+  static let defaultValue: VLDataError.InlineStyle = .init()
  }
 
  @usableFromInline
  internal struct PageStyleKey: EnvironmentKey
  {
   @usableFromInline
-  static let defaultValue: VLstack.DataError.PageStyle = .init()
+  static let defaultValue: VLDataError.PageStyle = .init()
  }
 }
 
 extension EnvironmentValues
 {
  @usableFromInline
- internal var contextErrorBoxStyle: VLstack.DataError.BoxStyle
+ internal var contextErrorBoxStyle: VLDataError.BoxStyle
  {
-  get { self[VLstack.DataError.BoxStyleKey.self] }
-  set { self[VLstack.DataError.BoxStyleKey.self] = newValue }
+  get { self[VLDataError.BoxStyleKey.self] }
+  set { self[VLDataError.BoxStyleKey.self] = newValue }
  }
 
  @usableFromInline
- internal var contextErrorDescriptionStyle: VLstack.DataError.DescriptionStyle
+ internal var contextErrorDescriptionStyle: VLDataError.DescriptionStyle
  {
-  get { self[VLstack.DataError.DescriptionStyleKey.self] }
-  set { self[VLstack.DataError.DescriptionStyleKey.self] = newValue }
+  get { self[VLDataError.DescriptionStyleKey.self] }
+  set { self[VLDataError.DescriptionStyleKey.self] = newValue }
  }
 
  @usableFromInline
  internal var contextErrorDismissEnabled: Bool
  {
-  get { self[VLstack.DataError.DismissEnabledKey.self] }
-  set { self[VLstack.DataError.DismissEnabledKey.self] = newValue }
+  get { self[VLDataError.DismissEnabledKey.self] }
+  set { self[VLDataError.DismissEnabledKey.self] = newValue }
  }
 
  @usableFromInline
- internal var contextErrorInlineStyle: VLstack.DataError.InlineStyle
+ internal var contextErrorInlineStyle: VLDataError.InlineStyle
  {
-  get { self[VLstack.DataError.InlineStyleKey.self] }
-  set { self[VLstack.DataError.InlineStyleKey.self] = newValue }
+  get { self[VLDataError.InlineStyleKey.self] }
+  set { self[VLDataError.InlineStyleKey.self] = newValue }
  }
 
  @usableFromInline
- internal var contextErrorPageStyle: VLstack.DataError.PageStyle
+ internal var contextErrorPageStyle: VLDataError.PageStyle
  {
-  get { self[VLstack.DataError.PageStyleKey.self] }
-  set { self[VLstack.DataError.PageStyleKey.self] = newValue }
+  get { self[VLDataError.PageStyleKey.self] }
+  set { self[VLDataError.PageStyleKey.self] = newValue }
  }
 }
 
@@ -82,14 +81,14 @@ extension View
 {
  /// Apply a custom box style to the error view in this view hierarchy.
  @inlinable
- public func error(boxStyle style: VLstack.DataError.BoxStyle) -> some View
+ public func error(boxStyle style: VLDataError.BoxStyle) -> some View
  {
   self.environment(\.contextErrorBoxStyle, style)
  }
 
  /// Apply a custom description style to the error view in this view hierarchy.
  @inlinable
- public func error(descriptionStyle style: VLstack.DataError.DescriptionStyle) -> some View
+ public func error(descriptionStyle style: VLDataError.DescriptionStyle) -> some View
  {
   self.environment(\.contextErrorDescriptionStyle, style)
  }
@@ -103,14 +102,14 @@ extension View
 
  /// Apply a custom inline style to the error view in this view hierarchy.
  @inlinable
- public func error(inlineStyle style: VLstack.DataError.InlineStyle) -> some View
+ public func error(inlineStyle style: VLDataError.InlineStyle) -> some View
  {
   self.environment(\.contextErrorInlineStyle, style)
  }
 
  /// Apply a custom page style to the error view in this view hierarchy.
  @inlinable
- public func error(pageStyle style: VLstack.DataError.PageStyle) -> some View
+ public func error(pageStyle style: VLDataError.PageStyle) -> some View
  {
   self.environment(\.contextErrorPageStyle, style)
  }

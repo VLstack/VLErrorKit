@@ -1,15 +1,14 @@
 import SwiftUI
-import VLstackNamespace
 import VLSFSymbolKit
 
-extension VLstack.DataError
+extension VLDataError
 {
- /// Represents a typed error context for VLstack.DataError.
+ /// Represents a typed error context for VLDataError.
  /// Contains the type, SF Symbol, title, optional description, and optional underlying error.
- public struct Context<CONTEXTTYPE: VLstack.DataError.ContextType>: Hashable, Equatable
+ public struct Context<CONTEXTTYPE: VLDataError.ContextType>: Hashable, Equatable
  {
   @usableFromInline internal let type: CONTEXTTYPE
-  public let sfSymbol: VLstack.SFSymbol
+  public let sfSymbol: VLSFSymbol
   public let symbolVariant: SymbolVariants
   public let title: String
   public let description: String?
@@ -25,7 +24,7 @@ extension VLstack.DataError
   ///   - error: Optional underlying error.
   public init(_ type: CONTEXTTYPE,
               _ title: String,
-              sfSymbol: VLstack.SFSymbol? = nil,
+              sfSymbol: VLSFSymbol? = nil,
               symbolVariant: SymbolVariants? = nil,
               description: String? = nil,
               error: (any Error)? = nil)
@@ -60,8 +59,8 @@ extension VLstack.DataError
 
   /// Equatable conformance comparing type, sfSymbol, title, and description.
   @inlinable
-  public static func == (lhs: VLstack.DataError.Context<CONTEXTTYPE>,
-                         rhs: VLstack.DataError.Context<CONTEXTTYPE>) -> Bool
+  public static func == (lhs: VLDataError.Context<CONTEXTTYPE>,
+                         rhs: VLDataError.Context<CONTEXTTYPE>) -> Bool
   {
       lhs.type == rhs.type
    && lhs.sfSymbol == rhs.sfSymbol
