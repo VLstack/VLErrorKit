@@ -6,7 +6,8 @@ extension VLDataError
  /// - Parameters:
  ///   - context: The error context containing the description.
  ///   - alignment: Text alignment for the description. Default is `.center`.
- internal struct DescriptionView<CONTEXTTYPE: VLDataError.ContextType>: View
+ ///   - actions: Views displayed at the bottom of the BoxView.
+ internal struct DescriptionView<CONTEXTTYPE: VLDataError.ContextType, ACTIONS: View>: View
  {
   @Environment(\.contextErrorDescriptionStyle) private var style
 
@@ -14,13 +15,16 @@ extension VLDataError
   private let alignment: TextAlignment
   private var description: [ String ]
   private let descriptionAlignment: Alignment
+  private let actions: () -> ACTIONS
 
-  /// Creates a DescriptionView with a given error context.
+  /// Creates a DescriptionView with a given error context and actions.
   internal init(_ context: VLDataError.Context<CONTEXTTYPE>,
-                alignment: TextAlignment = .center)
+                alignment: TextAlignment = .center,
+                @ViewBuilder actions: @escaping () -> ACTIONS)
   {
    self.context = context
    self.alignment = alignment
+   self.actions = actions
 
    self.description = context.description?.split(separator: "\n", omittingEmptySubsequences: false)
                                           .map { String($0) } ?? []
@@ -39,14 +43,16 @@ extension VLDataError
    }
   }
 
-  /// Creates a DescriptionView from a type, title, and underlying error.
+  /// Creates a DescriptionView from a type, title, and underlying error, with actions.
   internal init(_ type: CONTEXTTYPE,
                 _ title: String,
-                 error: any Error,
-                 alignment: TextAlignment = .center)
+                error: any Error,
+                alignment: TextAlignment = .center,
+                @ViewBuilder actions: @escaping () -> ACTIONS)
   {
    self.init(VLDataError.Context<CONTEXTTYPE>(type, title, error: error),
-             alignment: alignment)
+             alignment: alignment,
+             actions: actions)
   }
 
   internal var body: some View
@@ -71,6 +77,10 @@ extension VLDataError
      .frame(minHeight: 200, alignment: .topLeading)
      .padding(.horizontal)
     }
+   }
+   actions:
+   {
+    actions()
    }
    .frame(maxHeight: .infinity, alignment: .center)
   }

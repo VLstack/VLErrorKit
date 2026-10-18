@@ -1,0 +1,33 @@
+{
+  "originHash" : "d7b28cc670edf6d40079a8305eb5724a4d2e41214f027f872c230603beca2d1a",
+  "pins" : [
+    {
+      "identity" : "vlbundlekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/VLstack/VLBundleKit",
+      "state" : {
+        "revision" : "1d069eb5b8418c562bea7891fcbc7bea03fc54b2",
+        "version" : "1.5.1"
+      }
+    },
+    {
+      "identity" : "vlcolorkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/VLstack/VLColorKit",
+      "state" : {
+        "revision" : "28c1682293191c4c4b016fcca91c3e127236e6bf",
+        "version" : "3.1.0"
+      }
+    },
+    {
+      "identity" : "vlsfsymbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/VLstack/VLSFSymbolKit",
+      "state" : {
+        "revision" : "7d654cc3ed79ecaf0d0cebc2783892e758ba6353",
+        "version" : "3.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

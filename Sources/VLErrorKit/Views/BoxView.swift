@@ -3,12 +3,14 @@ import SwiftUI
 
 extension VLDataError
 {
- /// A SwiftUI view representing a styled error box with an optional content view.
+ /// A SwiftUI view representing a styled error box with an optional content view and optional actions.
  /// - Parameters:
  ///   - context: The error context to display (symbol, title, description).
  ///   - alignment: Text alignment for the content. Default is `.center`.
- ///   - content: Optional additional content displayed below the error title.
- public struct BoxView<CONTEXTTYPE: VLDataError.ContextType, CONTENT: View>: View
+ ///   - content: Optional additional content displayed below the error title, in a scroll view.
+ ///   - actions: Optional views displayed at the bottom of the box, below the scroll view, always visible.
+ ///     The caller is responsible for their padding.
+ public struct BoxView<CONTEXTTYPE: VLDataError.ContextType, CONTENT: View, ACTIONS: View>: View
  {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -18,27 +20,32 @@ extension VLDataError
   private let context: VLDataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
   private let content: () -> CONTENT
+  private let actions: () -> ACTIONS
 
-  /// Creates a BoxView with a given error context and optional content.
+  /// Creates a BoxView with a given error context, content and actions.
   public init(_ context: VLDataError.Context<CONTEXTTYPE>,
               alignment: TextAlignment = .center,
-              @ViewBuilder content: @escaping () -> CONTENT)
+              @ViewBuilder content: @escaping () -> CONTENT,
+              @ViewBuilder actions: @escaping () -> ACTIONS)
   {
    self.context = context
    self.alignment = alignment
    self.content = content
+   self.actions = actions
   }
 
-  /// Creates a BoxView from a type, title, and underlying error with optional content.
+  /// Creates a BoxView from a type, title, and underlying error, with content and actions.
   public init(_ type: CONTEXTTYPE,
               _ title: String,
               error: any Error,
               alignment: TextAlignment = .center,
-              @ViewBuilder content: @escaping () -> CONTENT)
+              @ViewBuilder content: @escaping () -> CONTENT,
+              @ViewBuilder actions: @escaping () -> ACTIONS)
   {
    self.init(VLDataError.Context<CONTEXTTYPE>(type, title, error: error),
              alignment: alignment,
-             content: content)
+             content: content,
+             actions: actions)
   }
 
   public var body: some View
@@ -72,6 +79,8 @@ extension VLDataError
     {
      content()
     }
+
+    actions()
    }
    .background(style.background)
    .clipShape(.rect(cornerRadius: style.strokeRadius))
@@ -174,5 +183,32 @@ extension VLDataError
    }
    .frame(maxWidth: .infinity, alignment: .center)
   }
+ }
+}
+
+extension VLDataError.BoxView where ACTIONS == EmptyView
+{
+ /// Creates a BoxView with a given error context and optional content, without actions.
+ public init(_ context: VLDataError.Context<CONTEXTTYPE>,
+             alignment: TextAlignment = .center,
+             @ViewBuilder content: @escaping () -> CONTENT)
+ {
+  self.init(context,
+            alignment: alignment,
+            content: content,
+            actions: { EmptyView() })
+ }
+
+ /// Creates a BoxView from a type, title, and underlying error with optional content, without actions.
+ public init(_ type: CONTEXTTYPE,
+             _ title: String,
+             error: any Error,
+             alignment: TextAlignment = .center,
+             @ViewBuilder content: @escaping () -> CONTENT)
+ {
+  self.init(VLDataError.Context<CONTEXTTYPE>(type, title, error: error),
+            alignment: alignment,
+            content: content,
+            actions: { EmptyView() })
  }
 }
