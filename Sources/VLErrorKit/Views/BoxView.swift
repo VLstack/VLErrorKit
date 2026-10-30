@@ -14,8 +14,8 @@ extension VLDataError
  {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @Environment(\.contextErrorDismissEnabled) private var dismissEnabled
   @Environment(\.contextErrorBoxStyle) private var style
+  @Environment(\.contextErrorDismissEnabled) private var dismissEnabled
 
   private let context: VLDataError.Context<CONTEXTTYPE>
   private let alignment: TextAlignment
