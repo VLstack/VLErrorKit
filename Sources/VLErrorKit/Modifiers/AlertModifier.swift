@@ -1,9 +1,9 @@
-import VLBundleKit
 import SwiftUI
 
 extension VLDataError
 {
  /// SwiftUI ViewModifier that displays an alert for a given context error.
+ /// The message shows the context title, then its description lines.
  /// - Parameters:
  ///   - title: Optional custom title for the alert. Defaults to a localized "Error".
  ///   - target: Optional target context to match before showing the alert.
@@ -26,16 +26,12 @@ extension VLDataError
   public func body(content: Content) -> some View
   {
    content
-    .alert(title ?? Bundle.main.localizedString("I18N-VLErrorKit.Error",
-                                                fallbackModule: .module),
-          isPresented: Binding<Bool>(get: { contextError != nil && contextError?.isEqual(target) == true },
-                                     set: { _ in contextError = nil }),
-          actions: {},
-          message:
-          {
-           Text(verbatim: contextError?.title ?? Bundle.main.localizedString("I18N-VLErrorKit.UnexpectedIssue",
-                                                                             fallbackModule: .module))
-          })
+    .alert(title ?? VLDataError.localized("I18N-VLErrorKit.Error"),
+           isPresented: Binding<Bool>(get: { contextError?.isEqual(target) == true },
+                                      set: { if !$0 { contextError = nil } }),
+           presenting: contextError,
+           actions: { _ in },
+           message: { Text(verbatim: $0.alertMessage) })
   }
  }
 }

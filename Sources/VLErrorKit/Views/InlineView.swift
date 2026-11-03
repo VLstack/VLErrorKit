@@ -3,10 +3,10 @@ import SwiftUI
 extension VLDataError
 {
  /// A compact SwiftUI view displaying an inline representation of an error context.
- /// Shows an SF Symbol, title, and optional description in a horizontal layout.
+ /// The appearance comes from the inline style (`.errorInlineStyle(_:)`, `.default` if none).
  public struct InlineView<CONTEXTTYPE: VLDataError.ContextType>: View
  {
-  @Environment(\.contextErrorInlineStyle) private var style
+  @Environment(\.errorInlineStyle) private var style
 
   private let context: VLDataError.Context<CONTEXTTYPE>?
   private let target: CONTEXTTYPE?
@@ -31,29 +31,17 @@ extension VLDataError
    if let context,
       context.isEqual(target, strict: strict)
    {
-    HStack(alignment: .firstTextBaseline)
-    {
-     Image(context.sfSymbol)
-      .symbolVariant(context.symbolVariant)
-      .font(style.font)
-      .foregroundStyle(style.symbolForeground)
-
-     VStack(alignment: .leading)
-     {
-      Text(context.title)
-       .font(style.font)
-       .multilineTextAlignment(.leading)
-
-      if let description = context.description
-      {
-       Text(description)
-        .font(style.descriptionFont)
-        .multilineTextAlignment(.leading)
-      }
-     }
-    }
-    .frame(maxWidth: .infinity, alignment: .leading)
+    (style ?? VLDataError.AnyInlineStyle(VLDataError.DefaultInlineStyle()))
+     .makeBody(configuration: configuration(context))
    }
+  }
+
+  private func configuration(_ context: VLDataError.Context<CONTEXTTYPE>) -> VLDataError.InlineStyleConfiguration
+  {
+   VLDataError.InlineStyleConfiguration(symbol: .init(Image(systemName: context.systemImage)
+                                                       .symbolVariant(context.symbolVariant)),
+                                        title: .init(Text(context.title)),
+                                        description: context.description.map { VLDataError.StyleContent(Text($0)) })
   }
  }
 }
@@ -83,7 +71,7 @@ struct InlineView_Previews: PreviewProvider
                                                    error: URLError(.badURL))
  static let dummyErrorD = PreviewInlineContextError(.exportEntry,
                                                     "title",
-                                                    sfSymbol: .squareAndArrowUp)
+                                                    systemImage: "square.and.arrow.up")
 
  static var previews: some View
  {
@@ -92,16 +80,14 @@ struct InlineView_Previews: PreviewProvider
    Section
    {
     VLDataError.InlineView(dummyErrorA)
-     .error(inlineStyle: .init(font: .largeTitle,
-                               symbolForeground: .green,
-                               descriptionFont: .footnote))
+     .errorInlineStyle(.default(font: .largeTitle,
+                                symbolColor: .green,
+                                descriptionFont: .footnote))
     VLDataError.InlineView(dummyErrorB)
     VLDataError.InlineView(dummyErrorC)
     VLDataError.InlineView(dummyErrorD)
    }
   }
-//  .previewInterfaceOrientation(.landscapeLeft)
-//  .preferredColorScheme(.dark)
  }
 }
 #endif

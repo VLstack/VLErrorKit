@@ -1,7 +1,14 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+
+let swiftSettings: [ SwiftSetting ] =
+[
+ .enableUpcomingFeature("ApproachableConcurrency"),
+ .enableUpcomingFeature("MemberImportVisibility"),
+ .enableUpcomingFeature("ExistentialAny")
+]
 
 let package = Package(name: "VLErrorKit",
                       defaultLocalization: "en",
@@ -11,15 +18,12 @@ let package = Package(name: "VLErrorKit",
                        .library(name: "VLErrorKit",
                                 targets: [ "VLErrorKit" ])
                       ],
-                      dependencies:
-                      [
-                       .package(url: "https://github.com/VLstack/VLBundleKit", from: "1.5.1"),
-                       .package(url: "https://github.com/VLstack/VLSFSymbolKit", from: "4.0.0"),
-                       .package(url: "https://github.com/VLstack/VLColorKit", from: "3.1.0")
-                      ],
                       targets:
                       [
                        .target(name: "VLErrorKit",
-                               dependencies: [ "VLBundleKit", "VLSFSymbolKit", "VLColorKit" ],
-                               resources: [ .process("Resources") ])
+                               resources: [ .process("Resources") ],
+                               swiftSettings: swiftSettings),
+                       .testTarget(name: "VLErrorKitTests",
+                                   dependencies: [ "VLErrorKit" ],
+                                   swiftSettings: swiftSettings)
                       ])

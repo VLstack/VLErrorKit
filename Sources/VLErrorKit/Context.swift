@@ -1,14 +1,13 @@
 import SwiftUI
-import VLSFSymbolKit
 
 extension VLDataError
 {
  /// Represents a typed error context for VLDataError.
- /// Contains the type, SF Symbol, title, optional description, and optional underlying error.
+ /// Contains the type, SF Symbol name, title, optional description, and optional underlying error.
  public struct Context<CONTEXTTYPE: VLDataError.ContextType>: Hashable, Equatable
  {
   @usableFromInline internal let type: CONTEXTTYPE
-  public let sfSymbol: VLSFSymbol
+  public let systemImage: String
   public let symbolVariant: SymbolVariants
   public let title: String
   public let description: String?
@@ -18,27 +17,27 @@ extension VLDataError
   /// - Parameters:
   ///   - type: The type of the context.
   ///   - title: The main title of the error.
-  ///   - sfSymbol: Optional SF Symbol to display. Defaults to `.info`.
-  ///   - symbolVariant: Optional symbol variant. Defaults to `.circle`.
+  ///   - systemImage: Optional SF Symbol name to display. Defaults to `info`.
+  ///   - symbolVariant: Optional symbol variant, used only with `systemImage`. Defaults to `.none`, or `.circle` with the default symbol.
   ///   - description: Optional description text. Defaults to `error?.localizedDescription`.
   ///   - error: Optional underlying error.
   public init(_ type: CONTEXTTYPE,
               _ title: String,
-              sfSymbol: VLSFSymbol? = nil,
+              systemImage: String? = nil,
               symbolVariant: SymbolVariants? = nil,
               description: String? = nil,
               error: (any Error)? = nil)
   {
    self.type = type
    self.title = title
-   if let sfSymbol
+   if let systemImage
    {
-    self.sfSymbol = sfSymbol
+    self.systemImage = systemImage
     self.symbolVariant = symbolVariant ?? .none
    }
    else
    {
-    self.sfSymbol = .info
+    self.systemImage = "info"
     self.symbolVariant = .circle
    }
    self.description = description ?? error?.localizedDescription
@@ -57,23 +56,47 @@ extension VLDataError
    strict ? type == target : target == nil || type == target
   }
 
-  /// Equatable conformance comparing type, sfSymbol, title, and description.
+  /// Description split into lines, followed by the underlying error description when it is not already the last line
+  internal var descriptionLines: [ String ]
+  {
+   var lines = description?.split(separator: "\n", omittingEmptySubsequences: false)
+                           .map { String($0) } ?? []
+
+   if let errorDescription = error?.localizedDescription,
+      lines.last != errorDescription
+   {
+    lines.append(contentsOf: [ "", "", errorDescription ])
+   }
+
+   return lines
+  }
+
+  /// Message displayed by the alert: the title, then the description lines after an empty line
+  internal var alertMessage: String
+  {
+   let lines = descriptionLines
+
+   return lines.isEmpty ? title
+                        : ([ title, "" ] + lines).joined(separator: "\n")
+  }
+
+  /// Equatable conformance comparing type, systemImage, title, and description.
   @inlinable
   public static func == (lhs: VLDataError.Context<CONTEXTTYPE>,
                          rhs: VLDataError.Context<CONTEXTTYPE>) -> Bool
   {
       lhs.type == rhs.type
-   && lhs.sfSymbol == rhs.sfSymbol
+   && lhs.systemImage == rhs.systemImage
    && lhs.title == rhs.title
    && lhs.description == rhs.description
   }
 
-  /// Hashes the context properties (excluding the underlying error).
+  /// Hashes the context properties (excluding the symbol variant and the underlying error).
   @inlinable
   public func hash(into hasher: inout Hasher)
   {
    hasher.combine(type)
-   hasher.combine(sfSymbol)
+   hasher.combine(systemImage)
    hasher.combine(title)
    hasher.combine(description)
   }
